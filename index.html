@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
+  <title>Стажировка</title>
+</head>
+<body>
+  <section class="container w-container">
+    <form id="creates_task" class="form-control">
+      <div class="create-control">
+        <div class="create-item">
+          <label for="priority_task">Приоритет: </label><br>
+          <select class="priority-task" id="priority_task">
+            <option value="high">высокий</option>
+            <option value="middle">средний</option>
+            <option value="poor">низкий</option>
+          </select>
+        </div>
+        <div class="create-item create-item-input">
+          <label for="text_task">Текст задачи: </label><br>
+          <input type="text" id="text_task" placeholder="Введите текст..." tabindex="2" class="text-task" >
+        </div>
+        <div class="create-item">
+          <button type="submit" id="add_task" class="add-task" onclick="addTask()">Добавить задачу</button>
+        </div>
+      </div>
+    </form>
+      <form id="filters_task" class="form-control" oninput="filteringTasks()">
+            <div class="filters-control">
+              <div class="filters-item">
+              <label for="filter_prior">Фильтр по приоритету: </label>
+              <select id="filter_prior" class="filter-prior">
+                <option value="">любой</option>
+                <option value="poor">низкий</option>
+                <option value="middle">средний</option>
+                <option value="high">высокий</option>
+              </select>
+              </div>
+              <div id="status" class="filters-item">   
+                <label>Фильтр по статусу: </label>
+                <label class="input-button">активные<input type="checkbox"  value="actively"></label>
+                <label class="input-button">отмененные<input type="checkbox"  value="cancelled"></label>
+                <label class="input-button">завершенные<input type="checkbox"  value="completed"></label>
+              </div>
+            </div>
+              <div class="sorts">
+                <div class="sorts-item">
+                  <label for="sort_date">Сортировка по дате создания: </label>
+                  <a href="#" id="test_date" onclick="sortTasksByDate()">
+                    <span class="span_icon fa fa-arrow-down active" aria-hidden = "true" id="sort_date"></span>
+                  </a>
+                </div>
+                <div class="sorts-item">
+                  <label for="sort_priority">Сортировка по приоритету: </label>
+                  <a href="#" id="test_priority" onclick="sortTasksByPriority()">
+                    <span class="span_icon fa fa-arrow-down active" aria-hidden = "true" id="sort_priority"></span>
+                  </a>
+                </div>
+              </div>  
+              <div>
+                <label for="filter_input">Поиск задачи по тексту: </label>
+                <input type="search" placeholder="Начните вводить текст задачи..." id="filter_input" class="filter-input">
+            </div>
+        </form>
+      <div class="wrapper main-content" id="tasks"></div>
+  </section>
+  <script src="index.js"></script>
+</body>
+</html>
