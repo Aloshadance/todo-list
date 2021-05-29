@@ -91,7 +91,7 @@ function outputStatus(array,index) {
 }
 // Удаление задачи
 const deleteTask = index => {
-  const result = confirm("Вы точно хотите удалить этот элемент?")
+  const result = confirm("Вы уверены, что хотите удалить эту задачу?")
   if (result) {
   filteredTaskList.splice(index, 1)
   taskList.splice(index, 1)
@@ -125,7 +125,7 @@ function sortTasksByDate () {
   if (filteredTaskList.length > 1) {  
   sort__priorities.classList.remove('selected-sort')
   sort__dates.classList.add('selected-sort')
-  }
+  } 
   if (sort__dates.classList.contains('active')) {
     filteredTaskList.sort((a, b) => a['date'] > b['date'] ? 1 : -1)
     sort__dates.classList.remove('active') 
