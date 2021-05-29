@@ -8,7 +8,6 @@ const taskList = [],
 let filteredTaskList = [],
     statusElements = [] 
 
-// Формирование задачи как объекта
 function Task(text, priority, date, status) {
   this.text = text
   this.priority = priority
@@ -65,7 +64,8 @@ const fillHtmlList = array => {
       tasks.innerHTML += createTemplate(item, index)
       outputStatus(array,index)
     })
-  }}
+  }
+}
 // Вывод приоритета на русском языке с цветом
 function outputPriority(n) {
     if (n.priority === 'high') {
