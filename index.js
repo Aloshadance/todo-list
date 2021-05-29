@@ -6,7 +6,7 @@ const taskList = [],
       sort__priorities = document.getElementById('sort_priority')
 
 let filteredTaskList = [],
-    statusElements = [] 
+    statusElements = []
 
 function Task(text, priority, date, status) {
   this.text = text
@@ -21,6 +21,8 @@ function addTask () {
   if(!textTask.value) return (alert("Заполните поле текста задачи!"))
   filtersTask.elements.filter_prior.value = ''
   filtersTask.elements.filter_input.value = ''
+  sort__dates.classList.remove('selected-sort')
+  sort__priorities.classList.remove('selected-sort')
   taskList.push(new Task(textTask.value, priorityTask.value, new Date().toLocaleString(), "actively"))
   filteredTaskList = taskList.slice()
   fillHtmlList(taskList)
