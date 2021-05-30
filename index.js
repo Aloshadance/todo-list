@@ -1,32 +1,77 @@
-const taskList = [], 
-      createsTask = document.forms.creates_task,
+const sendHttpRequest = (method, url, data) => {
+  const promise = new Promise ((resolve, reject) => {
+    const xhr = new XMLHttpRequest()
+    xhr.open(method, url)
+    xhr.responseType = 'json'
+    if(data) {
+      xhr.setRequestHeader('Content-Type', 'application/json')
+    }
+    xhr.onload = () => {
+      if (xhr.status >= 400) {
+        reject(xhr.response)
+      } else {
+        resolve(xhr.response)
+      }
+    }
+    xhr.onerror = () => {
+      reject('Ошибка!')
+    }
+    xhr.send(JSON.stringify(data))
+  })
+  return promise
+}
+
+const getData = () => {
+  sendHttpRequest('GET', 'http://127.0.0.1:3000/items').then(responseData => {
+    console.log(responseData)
+    taskList = responseData
+    fillHtmlList(taskList)
+  })
+
+};
+getData()
+const deleteData = itemId => {
+  sendHttpRequest('DELETE', `http://127.0.0.1:3000/items/${itemId}`).then(responseData => {
+    console.log('deleted')
+  })
+}
+
+const sendData = () => {
+  sendHttpRequest('POST', 'http://127.0.0.1:3000/items', {
+    text: textTask.value,
+    priority: priorityTask.value,
+    date: new Date().toLocaleString(),
+    status: "actively"
+  }).then(responseData => {
+    console.log(responseData)
+  }).catch(err => {
+    console.log(err)
+  })
+};
+
+// getData()
+ 
+const createsTask = document.forms.creates_task,
       addButton = createsTask.elements.add_task, 
       filtersTask = document.forms.filters_task, 
       sort__dates = document.getElementById('sort_date'),
-      sort__priorities = document.getElementById('sort_priority')
+      sort__priorities = document.getElementById('sort_priority'),
+      textTask = createsTask.elements.text_task,
+      priorityTask = createsTask.elements.priority_task
 
 let filteredTaskList = [],
-    statusElements = []
+    statusElements = [],
+    taskList = []
 
-function Task(text, priority, date, status) {
-  this.text = text
-  this.priority = priority
-  this.date = date
-  this.status = status
-}
 // Добавление задачи
 function addTask () {
-  const textTask = createsTask.elements.text_task,
-  priorityTask = createsTask.elements.priority_task
   if(!textTask.value) return (alert("Заполните поле текста задачи!"))
   filtersTask.elements.filter_prior.value = ''
   filtersTask.elements.filter_input.value = ''
   sort__dates.classList.remove('selected-sort')
   sort__priorities.classList.remove('selected-sort')
-  taskList.push(new Task(textTask.value, priorityTask.value, new Date().toLocaleString(), "actively"))
-  filteredTaskList = taskList.slice()
-  fillHtmlList(taskList)
-  textTask.value = ''
+  getData()
+  sendData()
 }
 // Фильтрация задач по приоритету, статусу, тексту
 function filteringTasks() {
@@ -90,13 +135,14 @@ function outputStatus(array,index) {
   statusElements[index].classList.remove('cancelled-task'))
 }
 // Удаление задачи
-const deleteTask = index => {
+const deleteTask = (index) => {
   const result = confirm("Вы уверены, что хотите удалить эту задачу?")
   if (result) {
+  const ind = filteredTaskList[index].id
   filteredTaskList.splice(index, 1)
   taskList.splice(index, 1)
+  deleteData(ind)
   }
-  fillHtmlList(filteredTaskList)
 }
 // Отмена задачи - установка статуса "отмененный"
 const cancelTask = index => {
