@@ -23,14 +23,17 @@ const sendHttpRequest = (method, url, data) => {
 
 const getData = () => {
   sendHttpRequest('GET', 'http://127.0.0.1:3000/items').then(responseData => {
-    fillHtmlList(responseData)
     taskList = responseData
+    filteredTaskList = taskList.slice()
+    fillHtmlList(responseData)
   })
 
 };
 getData()
 const deleteData = itemId => {
-  sendHttpRequest('DELETE', `http://127.0.0.1:3000/items/${itemId}`)
+  sendHttpRequest('DELETE', `http://127.0.0.1:3000/items/${itemId}`).then(responseData => {
+
+  })
 }
 
 const sendData = () => {
@@ -41,7 +44,8 @@ const sendData = () => {
     status: "actively"
   }).then(responseData => {
     taskList.push(responseData)
-    fillHtmlList(taskList)
+    filteredTaskList = taskList.slice()
+    fillHtmlList(filteredTaskList)
   }).catch(err => {
     console.log(err)
   })
@@ -73,12 +77,16 @@ function filteringTasks() {
   const filter__priorities = filtersTask.elements.filter_prior.value,
   filter__statuses = [...filtersTask.querySelectorAll('#status input:checked')].map(n => n.value),
   filter__texts = filtersTask.elements.filter_input.value
+  console.log(taskList)
+  console.log(filteredTaskList)
   filteredTaskList = taskList.filter(n => (
     (!filter__priorities || n.priority === filter__priorities) &&
     (!filter__statuses.length || filter__statuses.includes(n.status)) &&
     (!filter__texts || n.text.toLowerCase().indexOf(filter__texts.toLowerCase()) > -1 
     || n.text.toUpperCase().indexOf(filter__texts.toUpperCase()) > -1)
   ))
+  console.log(taskList)
+  console.log(filteredTaskList)
   fillHtmlList(filteredTaskList)
 }
 // Создание HTML задачи
@@ -132,15 +140,19 @@ function outputStatus(array,index) {
 }
 // Удаление задачи
 const deleteTask = (index) => {
-  const result = confirm("Вы уверены, что хотите удалить эту задачу?")
+  const result = confirm("Вы уверены, что хотите удалить эту задачу?", index)
   if (result) {
-  const ind = taskList[index].id
-  //filteredTaskList.splice(index, 1)
+  const ind = filteredTaskList[index].id
+  console.log(taskList)
+  console.log(filteredTaskList)
   taskList.splice(index, 1)
+  filteredTaskList.splice(index, 1)
   deleteData(ind)  
-  fillHtmlList(taskList)
+  console.log(taskList)
+  console.log(filteredTaskList)
+  fillHtmlList(filteredTaskList)
   }
-}
+} // Задача отфильтрованного массива удаляется, но к возврату "любой" выводится массив, который в функции filteringTasks принимает значение taskList, поэтому выводится неправильно
 // Отмена задачи - установка статуса "отмененный"
 const cancelTask = index => {
   filteredTaskList[index].status === "cancelled" 
