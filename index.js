@@ -23,17 +23,14 @@ const sendHttpRequest = (method, url, data) => {
 
 const getData = () => {
   sendHttpRequest('GET', 'http://127.0.0.1:3000/items').then(responseData => {
-    console.log(responseData)
+    fillHtmlList(responseData)
     taskList = responseData
-    fillHtmlList(taskList)
   })
 
 };
 getData()
 const deleteData = itemId => {
-  sendHttpRequest('DELETE', `http://127.0.0.1:3000/items/${itemId}`).then(responseData => {
-    console.log('deleted')
-  })
+  sendHttpRequest('DELETE', `http://127.0.0.1:3000/items/${itemId}`)
 }
 
 const sendData = () => {
@@ -43,13 +40,12 @@ const sendData = () => {
     date: new Date().toLocaleString(),
     status: "actively"
   }).then(responseData => {
-    console.log(responseData)
+    taskList.push(responseData)
+    fillHtmlList(taskList)
   }).catch(err => {
     console.log(err)
   })
 };
-
-// getData()
  
 const createsTask = document.forms.creates_task,
       addButton = createsTask.elements.add_task, 
@@ -70,7 +66,6 @@ function addTask () {
   filtersTask.elements.filter_input.value = ''
   sort__dates.classList.remove('selected-sort')
   sort__priorities.classList.remove('selected-sort')
-  getData()
   sendData()
 }
 // Фильтрация задач по приоритету, статусу, тексту
@@ -81,7 +76,8 @@ function filteringTasks() {
   filteredTaskList = taskList.filter(n => (
     (!filter__priorities || n.priority === filter__priorities) &&
     (!filter__statuses.length || filter__statuses.includes(n.status)) &&
-    (!filter__texts || n.text.toLowerCase().indexOf(filter__texts.toLowerCase()) > -1 || n.text.toUpperCase().indexOf(filter__texts.toUpperCase()) > -1) 
+    (!filter__texts || n.text.toLowerCase().indexOf(filter__texts.toLowerCase()) > -1 
+    || n.text.toUpperCase().indexOf(filter__texts.toUpperCase()) > -1)
   ))
   fillHtmlList(filteredTaskList)
 }
@@ -138,10 +134,11 @@ function outputStatus(array,index) {
 const deleteTask = (index) => {
   const result = confirm("Вы уверены, что хотите удалить эту задачу?")
   if (result) {
-  const ind = filteredTaskList[index].id
-  filteredTaskList.splice(index, 1)
+  const ind = taskList[index].id
+  //filteredTaskList.splice(index, 1)
   taskList.splice(index, 1)
-  deleteData(ind)
+  deleteData(ind)  
+  fillHtmlList(taskList)
   }
 }
 // Отмена задачи - установка статуса "отмененный"
