@@ -16,7 +16,7 @@
           <label for="priority_task">Приоритет: </label><br>
           <select class="priority-task" id="priority_task">
             <option value="high">высокий</option>
-            <option value="middle">средний</option>
+            <option value="middle" selected>средний</option>
             <option value="poor">низкий</option>
           </select>
         </div>
@@ -42,21 +42,21 @@
               </div>
               <div id="status" class="filters-item">   
                 <label>Фильтр по статусу: </label>
-                <label class="input-button">активные<input type="checkbox"  value="actively"></label>
-                <label class="input-button">отмененные<input type="checkbox"  value="cancelled"></label>
-                <label class="input-button">завершенные<input type="checkbox"  value="completed"></label>
+                <label class="input-button">активные<input type="checkbox" value="actively" checked></label>
+                <label class="input-button">отмененные<input type="checkbox" value="cancelled" checked></label>
+                <label class="input-button">завершенные<input type="checkbox" value="completed" checked></label>
               </div>
             </div>
               <div class="sorts">
                 <div class="sorts-item">
                   <label for="sort_date">Сортировка по дате создания: </label>
-                  <a href="#" id="test_date" >
+                  <a href="#" id="test_date" onclick="sortTasksByDate()" >
                     <span class="span_icon fa fa-arrow-down active" aria-hidden = "true" id="sort_date"></span>
                   </a>
                 </div>
                 <div class="sorts-item">
                   <label for="sort_priority">Сортировка по приоритету: </label>
-                  <a href="#" id="test_priority" >
+                  <a href="#" id="test_priority" onclick="sortTasksByPriority()">
                     <span class="span_icon fa fa-arrow-down active" aria-hidden = "true" id="sort_priority"></span>
                   </a>
                 </div>
