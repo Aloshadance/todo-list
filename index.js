@@ -1,11 +1,11 @@
 const createsTask = document.forms.creates_task,
-      addButton = createsTask.elements.add_task, 
-      filtersTask = document.forms.filters_task, 
-      sort__dates = document.getElementById('sort_date'),
-      sort__priorities = document.getElementById('sort_priority'),
-      textTask = createsTask.elements.text_task,
-      priorityTask = createsTask.elements.priority_task,
-      filter__priorities = filtersTask.elements.filter_prior
+addButton = createsTask.elements.add_task, 
+filtersTask = document.forms.filters_task, 
+sort__dates = document.getElementById('sort_date'),
+sort__priorities = document.getElementById('sort_priority'),
+textTask = createsTask.elements.text_task,
+priorityTask = createsTask.elements.priority_task,
+filter__priorities = filtersTask.elements.filter_prior
 
 let filteredTaskList = [],
     statusElements = [],
@@ -52,9 +52,9 @@ const deleteData = itemId => {
 }
 const editDataText = (itemId, editedText) => {
   sendHttpRequest('PUT', `http://127.0.0.1:3000/items/${itemId}`, {
-    text: editedText }).catch(err => {
-      console.log(err)
-    })
+  text: editedText }).catch(err => {
+    console.log(err)
+  })
 }
 const editDataStatus = (itemId, editedStatus) => {
   sendHttpRequest('PUT', `http://127.0.0.1:3000/items/${itemId}`, {
@@ -92,13 +92,13 @@ function filteringTasks() {
   filter__texts = filtersTask.elements.filter_input.value,
   filter__priorities = filtersTask.elements.filter_prior.value
   filteredTaskList = taskList.filter(n => (
-      (!filter__priorities || n.priority === filter__priorities) &&
-      (!filter__statuses.length || filter__statuses.includes(n.status)) &&
-      (!filter__texts || n.text.toLowerCase().indexOf(filter__texts.toLowerCase()) > -1 
-      || n.text.toUpperCase().indexOf(filter__texts.toUpperCase()) > -1) &&
-      (!sort__dates.classList.contains('selected-sort') || (!sort__priorities.classList.contains('selected-sort')))
-    )) 
-    fillHtmlList(filteredTaskList)
+    (!filter__priorities || n.priority === filter__priorities) &&
+    (!filter__statuses.length || filter__statuses.includes(n.status)) &&
+    (!filter__texts || n.text.toLowerCase().indexOf(filter__texts.toLowerCase()) > -1 
+    || n.text.toUpperCase().indexOf(filter__texts.toUpperCase()) > -1) &&
+    (!sort__dates.classList.contains('selected-sort') || (!sort__priorities.classList.contains('selected-sort')))
+  )) 
+  fillHtmlList(filteredTaskList)
 }
 // Создание HTML задачи
 const createTemplate = (n, index) => {
@@ -130,13 +130,13 @@ const fillHtmlList = array => {
 }
 // Вывод приоритета на русском языке с цветом
 function outputPriority(n) {
-    if (n.priority === 'high') {
-      priority = '<label  class ="priority high-priority">Высокий</label>'
-    } else if (n.priority === 'middle') {
-      priority = '<label class ="priority mid-priority">Средний</label>'
-    } else {
-      priority = '<label class ="priority poor-priority">Низкий</label>'
-    }}
+  if (n.priority === 'high') {
+    priority = '<label  class ="priority high-priority">Высокий</label>'
+  } else if (n.priority === 'middle') {
+  priority = '<label class ="priority mid-priority">Средний</label>'
+  } else {
+    priority = '<label class ="priority poor-priority">Низкий</label>'
+  }}
 // Вывод статуса в соответствующем цвете
 function outputStatus(array,index) {
   statusElements = document.querySelectorAll('.status-of-task')
@@ -154,7 +154,6 @@ const deleteTask = (index) => {
   const result = confirm("Вы уверены, что хотите удалить эту задачу?")
   if (result) {
   const ind = filteredTaskList[index].id
-  console.log(ind)
   for (let n = 0 ; n < taskList.length ; n++) {
     if (taskList[n].id === ind) {
       let removedTask = taskList.splice(n,1)
@@ -199,30 +198,33 @@ function sortTasksByDate () {
   if (filteredTaskList.length > 1) {  
   sort__priorities.classList.remove('selected-sort')
   sort__dates.classList.add('selected-sort')
-  if (sort__dates.classList.contains('active')) {
-    filteredTaskList.sort((a, b) => a['date'] > b['date'] ? 1 : -1)
-    sort__dates.classList.remove('active') 
-  } else {
-    filteredTaskList.sort((a, b) => a['date'] > b['date'] ? -1 : 1)
-    sort__dates.classList.add('active') 
-  }} 
+    if (sort__dates.classList.contains('active')) {
+      filteredTaskList.sort((a, b) => a['date'] > b['date'] ? 1 : -1)
+      sort__dates.classList.remove('active') 
+    } else {
+      filteredTaskList.sort((a, b) => a['date'] > b['date'] ? -1 : 1)
+      sort__dates.classList.add('active') 
+    }} else {
+      sort__dates.classList.add('disabled')
+    }
   fillHtmlList(filteredTaskList)
 }
 // Сортировка задач по приоритету
 function sortTasksByPriority () {
   if (filter__priorities.value !== '') {
-    return alert('Уберите фильтр по приоритету!') && sort__priorities.classList.add('disabled')
-  }
+    return alert('Уберите фильтр по приоритету!')}
   if (filteredTaskList.length > 1) {  
     sort__dates.classList.remove('selected-sort')
     sort__priorities.classList.add('selected-sort')
+    if (sort__priorities.classList.contains('active')) {
+      filteredTaskList.sort((a, b) => a.priority > b.priority ? -1 : 1)
+      sort__priorities.classList.remove('active')
+    } else {
+      filteredTaskList.sort((a, b) => a.priority > b.priority ? 1 : -1)
+      sort__priorities.classList.add('active') 
     }
-  if (sort__priorities.classList.contains('active')) {
-    filteredTaskList.sort((a, b) => a.priority > b.priority ? -1 : 1)
-    sort__priorities.classList.remove('active')
-  } else {
-    filteredTaskList.sort((a, b) => a.priority > b.priority ? 1 : -1)
-    sort__priorities.classList.add('active') 
-  }
+    } else {
+      sort__priorities.classList.add('disabled')
+    }
   fillHtmlList(filteredTaskList)
 }

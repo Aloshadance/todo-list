@@ -9,7 +9,7 @@
   <title>Стажировка</title>
 </head>
 <body>
-  <section class="container w-container">
+  <section class="container">
     <form id="creates_task" class="form-control">
       <div class="create-control">
         <div class="create-item">
@@ -50,7 +50,7 @@
               <div class="sorts">
                 <div class="sorts-item">
                   <label for="sort_date">Сортировка по дате создания: </label>
-                  <a href="#" id="test_date" onclick="sortTasksByDate()" >
+                  <a href="#" id="test_date" onclick="sortTasksByDate()">
                     <span class="span_icon fa fa-arrow-down active" aria-hidden = "true" id="sort_date"></span>
                   </a>
                 </div>
@@ -66,7 +66,7 @@
                 <input type="search" placeholder="Начните вводить текст задачи..." id="filter_input" class="filter-input">
             </div>
         </form>
-      <div class="wrapper main-content" id="tasks"></div>
+      <div class="main-content" id="tasks"></div>
   </section>
   <script src="index.js"></script>
 </body>
