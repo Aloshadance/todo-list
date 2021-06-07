@@ -1,5 +1,5 @@
 body {
-  background-color: #b1b1b1;
+  background-color: white;
   height: inherit;
 }
 html {
@@ -18,7 +18,7 @@ html {
   border-radius: 10px;
   -webkit-box-shadow: 0 2px 10px 0 #074b83;
   box-shadow: 0 2px 10px 0 #074b83; 
-  background-color: #94cefd;
+  background: white;
 }
 .text-task {
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -28,7 +28,7 @@ html {
 .add-task {
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   color: white;
-  background: green; 
+  background: green;
   padding: 10px; 
   border-radius: 5px;
   border-width: 1px;
@@ -61,7 +61,7 @@ box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5)
 }
 .form-control, .main-content {
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  background:#cccccc;
+  background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
   padding: 10px;
   margin:15px;
   border: 1px solid #000;
@@ -89,7 +89,7 @@ box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5)
   font-weight: bold;
 }
 .mid-priority {
-  color: purple;
+  color: blue;
   font-weight: bold;
 }
 .poor-priority {
@@ -158,15 +158,15 @@ select:hover {
   vertical-align: middle;
 }
 .task-icons {
+  display: inline-block;
   font-size: 20px;
-  float:right;
 }
 .task-date {
   width: 120px;
 }
 .status-of-task {
   height: inherit;
-  background-color: rgba(220, 240, 245, 0.939);
+  background-color: rgba(117, 223, 250, 0.939);
   border-radius: 10px;
   -webkit-box-shadow: 0 5px 5px 0 #074b83;
   box-shadow: 0 2px 10px 0 #074b83; 

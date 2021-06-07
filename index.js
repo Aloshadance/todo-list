@@ -206,6 +206,7 @@ function sortTasksByDate () {
       sort__dates.classList.add('active') 
     }} else {
       sort__dates.classList.add('disabled')
+      alert('Для сортировки по дате создания требуется несколько задач!')
     }
   fillHtmlList(filteredTaskList)
 }
@@ -225,6 +226,7 @@ function sortTasksByPriority () {
     }
     } else {
       sort__priorities.classList.add('disabled')
+      alert('Для сортировки по приоритету требуется несколько задач!')
     }
   fillHtmlList(filteredTaskList)
 }
