@@ -27,7 +27,7 @@ const sendHttpRequest = (method, url, data) => {
       }
     }
     xhr.onerror = () => {
-      reject('Ошибка!')
+      reject(xhr.response)
     }
     xhr.send(JSON.stringify(data))
   })
